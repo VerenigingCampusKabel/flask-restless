@@ -488,6 +488,8 @@ class DefaultDeserializer(DeserializerBase):
         using the constructor) with the given attributes set on it.
 
         """
+        if hasattr(model.__mapper__, 'polymorphic_on') and hasattr(model.__mapper__.polymorphic_on, 'name'):
+            del attributes[model.__mapper__.polymorphic_on.name]
         return model(**attributes)
 
     def _assign_related_resources(self, instance, related_resources):
